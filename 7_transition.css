@@ -1,229 +1,145 @@
-/* =========================
-   Layout variables
-========================= */
 :root{
-  --sidebar-w: 210px;     /* left menu width */
-  --header-h: 120px;      /* fixed header height */
+  --sidebar-w: 210px;
+  --header-h: 110px;
 }
 
-/* Anchor jumps should land BELOW the fixed header */
 html{
   scroll-padding-top: var(--header-h);
 }
 
-*{ box-sizing: border-box; }
-
 body{
-  margin: 0;
+  margin:0;
   font-family: Arial, sans-serif;
-  background: #fff;
 }
 
-/* =========================
-   LEFT NAV (menuItems)
-========================= */
+/* ================= Sidebar ================= */
 #menuItems{
   position: fixed;
-  top: 0;
-  left: 0;
+  left:0;
+  top:0;
   width: var(--sidebar-w);
-  height: 100vh;
-  background: #000;
-  padding: 0;
-  margin: 0;
-  z-index: 20;
+  height:100vh;
+  background:black;
+  z-index:20;
 }
 
-/* All buttons in sidebar */
-#menuItems > button{
-  width: 100%;
-  display: block;
-  border: 1px solid #000;
-  background: #0017ff;
-  color: #fff;
-  font-size: 18px;
-  padding: 14px 10px;
-  cursor: pointer;
-  transition: background-color .25s ease;
+#menuItems button{
+  width:100%;
+  background:#0017ff;
+  color:white;
+  padding:14px;
+  border:1px solid black;
+  cursor:pointer;
+  transition: background .3s;
 }
 
-/* Requirement: hovering nav button changes background */
-#menuItems > button:hover{
-  background: #b18900; /* gold-ish */
+#menuItems button:hover{
+  background:#b18900;
 }
 
-/* =========================
-   JUMP MENU (hidden until hover Recent Articles)
-========================= */
+/* dropdown */
 #jumpMenu{
-  list-style: none;
-  margin: 0;
-  padding: 10px 0;
-  background: #d4a325;
-  display: none;          /* hidden by default */
+  list-style:none;
+  margin:0;
+  padding:8px 0;
+  background:#d4a325;
+  display:none;
 }
 
-/* Show the list when hovering Recent Articles button OR the list itself */
 #recentArticles:hover + #jumpMenu,
 #jumpMenu:hover{
-  display: block;
-}
-
-#jumpMenu li{
-  padding: 4px 0;
+  display:block;
 }
 
 #jumpMenu a{
-  display: block;
-  padding: 2px 14px;
-  text-decoration: underline;
-  color: #0000ee;
-  font-size: 16px;
+  display:block;
+  padding:3px 12px;
+  color:#0000ee;
 }
 
-/* Requirement: hover over jump menu item changes font + background */
 #jumpMenu a:hover{
-  background: #0017ff;
-  color: #fff;
+  background:#0017ff;
+  color:white;
 }
 
-/* =========================
-   MAIN AREA (everything right of sidebar)
-========================= */
-main{
-  margin-left: var(--sidebar-w);
-  padding-top: var(--header-h);
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-/* =========================
-   FIXED HEADER (MyBlog.com)
-========================= */
+/* ================= Header ================= */
 header{
-  position: fixed;
-  top: 0;
-  left: var(--sidebar-w);
-  width: calc(100% - var(--sidebar-w));
-  height: var(--header-h);
-  background: #ff0000;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom: 2px solid #000;
+  position:fixed;
+  left:var(--sidebar-w);
+  top:0;
+  width:calc(100% - var(--sidebar-w));
+  height:var(--header-h);
+  background:red;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:10;
+  font-size:32px;
+  font-weight:bold;
 }
 
-header p{
-  margin: 0;
-  font-size: 32px;
-  font-weight: 800;
-  color: #000;
+/* ================= Main ================= */
+main{
+  margin-left:var(--sidebar-w);
+  padding-top:var(--header-h);
+  padding-left:20px;
+  padding-right:20px;
 }
 
-/* Title */
 h1{
-  text-align: center;
-  font-size: 56px;
-  margin: 30px 0 25px;
-  font-family: "Times New Roman", serif;
+  text-align:center;
+  font-size:56px;
+  font-family:"Times New Roman", serif;
 }
 
-/* =========================
-   ARTICLES: neat grid + reflow on resize
-========================= */
+/* ================= Articles (NO CUT OFF) ================= */
 #container{
-  display: flex;
-  flex-wrap: wrap;              /* reflow on resize */
-  justify-content: space-evenly;
-  align-items: flex-start;
-  gap: 28px 40px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:30px 40px;
+  justify-content:space-evenly;
 }
 
-/* Each article card */
 #container article{
-  width: 300px;                 /* hint requirement */
-  color: #b5b5b5;               /* lightly-colored initially */
-  max-height: 240px;            /* collapsed */
-  overflow: hidden;
-  transition: color 2s, max-height 2s, transform 2s; /* requirement: 2s */
-  scroll-margin-top: var(--header-h); /* anchor landing fix */
+  width:300px;
+  color:#b5b5b5;
+  padding:10px;
+  transition: color 2s, transform 2s, padding 2s;
 }
 
-/* Requirement: on hover become darker + expand over 2s */
 #container article:hover{
-  color: #111;
-  max-height: 1200px;           /* expanded */
-  transform: scale(1.02);
+  color:#111;
+  transform: scale(1.08);
+  padding:18px;
 }
 
 #container article h2{
-  margin: 0 0 10px 0;
-  font-size: 22px;
-  font-weight: 700;
-  color: inherit;
+  font-size:22px;
+  margin:0 0 10px;
 }
 
-/* =========================
-   Requirement: first letter of main text
-   - Times New Roman, 36px
-   - Read More unaffected
-========================= */
-#container article > p:first-of-type::first-letter{
-  font-family: "Times New Roman", Times, serif;
-  font-size: 36px;
-  line-height: 1;
-  float: left;
-  margin: 2px 6px 0 0;
+/* first letter */
+#container article p:first-of-type::first-letter{
+  font-family:"Times New Roman", serif;
+  font-size:36px;
+  float:left;
+  margin-right:6px;
 }
 
-/* =========================
-   Requirement: Google links show arrow icon to the right
-   (Read more links go to https://www.google.com in your HTML)
-========================= */
+/* google arrow */
 a[href*="google"]::after{
-  content: "";
-  display: inline-block;
-  width: 18px;
-  height: 18px;
-  margin-left: 6px;
-  vertical-align: -3px;
-  background-repeat: no-repeat;
-  background-size: contain;
-
-  /* external-link icon */
-  background-image: url("data:image/svg+xml;utf8,\
-<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>\
-<path fill='%230017ff' d='M14 2h4v4h-2V5.41l-6.29 6.3-1.42-1.42L14.59 4H14V2z'/>\
-<path fill='%230017ff' d='M16 18H2V4h7V2H2C.9 2 0 2.9 0 4v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7z'/>\
-</svg>");
+  content:" ↗";
+  color:#0017ff;
+  font-weight:bold;
 }
 
-/* Style read more links a bit (optional) */
-#container article a{
-  color: #0000ee;
-}
-
-/* =========================
-   THANK YOU box: fixed bottom-right
-========================= */
+/* ================= Thanks ================= */
 #thanks{
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  margin: 0;
-  background: #86c9f5;
-  border: 2px solid #000;
-  padding: 18px 24px;
-  font-size: 40px;
-  z-index: 30;
-}
-
-#thanks a{
-  color: #0000ee;
-}
-
-/* Footer just so it doesn't get hidden behind the thanks box */
-footer{
-  padding-bottom: 120px;
+  position:fixed;
+  right:0;
+  bottom:0;
+  background:#86c9f5;
+  border:2px solid black;
+  padding:18px;
+  font-size:36px;
 }
